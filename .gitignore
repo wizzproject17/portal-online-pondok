@@ -1,0 +1,10 @@
+# Mengabaikan folder hasil build
+tmp/
+main.exe
+
+# Mengabaikan data pribadi santri
+uploads/
+
+# Mengabaikan log & config lokal
+.air.toml
+.vscode/
