@@ -80,13 +80,28 @@ type KPIAnak struct {
 var DB *gorm.DB
 var store *session.Store
 
-func connectDB() {
-	dsn := "root:@tcp(127.0.0.1:3306)/db_pendaftaran?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatal("DB Error:", err)
+func initDB() {
+	// 1. Cek apakah ada variabel DATABASE_URL dari hosting (Koyeb)
+	dsn := os.Getenv("DATABASE_URL")
+
+	// 2. Kalau DATABASE_URL kosong (berarti lu lagi di laptop), pake XAMPP
+	if dsn == "" {
+		// Sesuaikan nama database lokal lu (db_pendaftaran?)
+		dsn = "root:@tcp(127.0.0.1:3306)/db_pendaftaran?charset=utf8mb4&parseTime=True&loc=Local"
+		fmt.Println("Berjalan di mode LOKAL (XAMPP)")
+	} else {
+		fmt.Println("Berjalan di mode CLOUD (Clever Cloud)")
 	}
-	db.AutoMigrate(&Akun{}, &Siswa{}, &JurnalTahfidz{}, &PembayaranSPP{}, &Pengaturan{}, &Notifikasi{})
+
+	var err error
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic("Aduh Bre, gagal konek DB!")
+	}
+
+	// Otomatis bikin tabel di database baru
+	DB.AutoMigrate(&Akun{}, &Siswa{}, &Pengaturan{})
+}
 
 	// Inject Data Saklar PPDB dengan FirstOrCreate (Anti Error Duplicate)
 	var setting Pengaturan
