@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - SIM-P Ar-Romlah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        /* Kustomisasi SweetAlert biar match sama tema Web */
+        div:where(.swal2-container) div:where(.swal2-popup) { border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="bg-slate-900 min-h-[100dvh] flex items-center justify-center p-5 relative overflow-hidden">
+
+    <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-900/40 via-slate-900 to-slate-900 z-0"></div>
+    <img src="/public/logo.png" class="absolute -bottom-20 -right-20 w-[500px] opacity-[0.03] pointer-events-none mix-blend-screen z-0">
+
+    <div class="glass-card w-full max-w-sm rounded-[32px] p-8 shadow-2xl relative z-10">
+        
+        <div class="text-center mb-8">
+            <img src="/public/logo.png" class="w-20 mx-auto mb-4 border-[3px] border-emerald-500 rounded-full p-1 bg-slate-800 shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+            <h1 class="text-3xl font-black text-white tracking-tighter">SIM-P</h1>
+            <p class="text-[10px] text-emerald-400 font-bold mt-1 tracking-[0.2em] uppercase">Ar-Romlah Cikarang</p>
+        </div>
+
+        <div class="flex bg-slate-950/60 rounded-2xl p-1.5 mb-8 border border-slate-700/50">
+            <button onclick="tab('in')" id="ti" class="flex-1 py-3 text-xs font-black bg-emerald-500 text-slate-900 rounded-xl transition-all shadow-md uppercase tracking-widest">Masuk</button>
+            <button onclick="tab('up')" id="tu" class="flex-1 py-3 text-xs font-bold text-slate-400 rounded-xl transition-all uppercase tracking-widest">Daftar</button>
+        </div>
+
+        <form action="/cek-login" method="POST" id="fi" class="space-y-4">
+            <input type="tel" name="no_wa" placeholder="Nomor WhatsApp" class="w-full bg-slate-950/50 border border-slate-700/50 text-white rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-emerald-500 transition" required>
+            <input type="password" name="password" placeholder="Password" class="w-full bg-slate-950/50 border border-slate-700/50 text-white rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-emerald-500 transition" required>
+            <button type="submit" class="w-full bg-emerald-500 active:bg-emerald-600 text-slate-900 font-black py-4 rounded-2xl shadow-[0_8px_20px_rgba(16,185,129,0.25)] mt-4 tracking-widest uppercase text-sm transition-transform active:scale-[0.98]">Akses Portal</button>
+        </form>
+
+        <form action="/register-akun" method="POST" id="fu" class="space-y-4 hidden">
+            <input type="tel" name="no_wa" placeholder="No WhatsApp Aktif" class="w-full bg-slate-950/50 border border-slate-700/50 text-white rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-amber-500 transition" required>
+            <input type="password" name="password" placeholder="Buat Password" class="w-full bg-slate-950/50 border border-slate-700/50 text-white rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-amber-500 transition" required>
+            <button type="submit" class="w-full bg-amber-400 active:bg-amber-500 text-slate-900 font-black py-4 rounded-2xl shadow-[0_8px_20px_rgba(251,191,36,0.25)] mt-4 tracking-widest uppercase text-sm transition-transform active:scale-[0.98]">Buat Akun Baru</button>
+        </form>
+
+    </div>
+
+    <script>
+        // Logika Pindah Tab
+        function tab(t){
+            const fi=document.getElementById('fi'), fu=document.getElementById('fu'), ti=document.getElementById('ti'), tu=document.getElementById('tu');
+            if(t==='in'){
+                fi.classList.remove('hidden'); fu.classList.add('hidden');
+                ti.className='flex-1 py-3 text-xs font-black bg-emerald-500 text-slate-900 rounded-xl transition-all shadow-md uppercase tracking-widest';
+                tu.className='flex-1 py-3 text-xs font-bold text-slate-400 rounded-xl transition-all uppercase tracking-widest';
+            } else {
+                fu.classList.remove('hidden'); fi.classList.add('hidden');
+                tu.className='flex-1 py-3 text-xs font-black bg-amber-400 text-slate-900 rounded-xl transition-all shadow-md uppercase tracking-widest';
+                ti.className='flex-1 py-3 text-xs font-bold text-slate-400 rounded-xl transition-all uppercase tracking-widest';
+            }
+        }
+
+        // Logika Nangkep Status dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status) {
+            // Bersihin URL di atas biar gak jelek diliat
+            window.history.replaceState(null, null, window.location.pathname);
+
+            if (status === 'gagal') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Masuk!',
+                    text: 'Cek lagi nomor WhatsApp atau Password lu.',
+                    background: '#1e293b',
+                    color: '#fff',
+                    confirmButtonColor: '#10b981', // warna emerald-500
+                    confirmButtonText: 'Coba Lagi'
+                });
+            } else if (status === 'sukses') {
+                tab('in'); // Arahin balik ke tab login
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Akun Dibuat!',
+                    text: 'Akun wali santri berhasil didaftarkan. Silakan login.',
+                    background: '#1e293b',
+                    color: '#fff',
+                    confirmButtonColor: '#10b981',
+                    confirmButtonText: 'Siap!'
+                });
+            } else if (status === 'exist') {
+                tab('up'); // Tahan di tab pendaftaran
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Nomor Terdaftar',
+                    text: 'Nomor WhatsApp ini sudah dipakai. Langsung login aja ya.',
+                    background: '#1e293b',
+                    color: '#fff',
+                    confirmButtonColor: '#fbbf24', // warna amber-400
+                    confirmButtonText: 'Oke'
+                });
+            }
+        }
+    </script>
+</body>
+</html>

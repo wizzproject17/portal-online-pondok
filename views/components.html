@@ -1,0 +1,39 @@
+{{ define "meta_head" }}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; } 
+        .glass-card { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+{{ end }}
+
+{{ define "bg_watermark" }}
+    <img src="/public/logo.png" class="fixed top-1/4 -right-20 w-[450px] opacity-[0.04] mix-blend-screen z-0 pointer-events-none" alt="BG">
+{{ end }}
+
+{{ define "header_wali" }}
+    <header class="pt-8 pb-4 px-6 relative z-10 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <img src="/public/logo.png" class="w-12 h-12 border-2 border-emerald-500 rounded-full p-0.5 bg-slate-800 shadow-lg shadow-emerald-500/20">
+            <div>
+                <h1 class="font-black text-xl text-white tracking-tight">SIM-P AR-ROMLAH</h1>
+                <p class="text-[10px] text-emerald-400 font-bold uppercase tracking-widest">Portal Wali Santri</p>
+            </div>
+        </div>
+    </header>
+{{ end }}
+
+{{ define "header_admin_mobile" }}
+    <header class="md:hidden pt-8 pb-4 px-6 relative z-10 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <img src="/public/logo.png" class="w-10 h-10 border-2 border-sky-500 rounded-full p-0.5 bg-slate-800">
+            <div>
+                <h1 class="font-black text-lg text-white tracking-tight leading-none">SIM-P ADMIN</h1>
+                <p class="text-[9px] text-sky-400 font-bold uppercase tracking-widest mt-1">Ruang Kendali</p>
+            </div>
+        </div>
+        <a href="/logout" class="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-500/20 active:scale-95 transition">Logout</a>
+    </header>
+{{ end }}

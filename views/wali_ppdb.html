@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>Pendaftaran PPDB - SIM-P</title>
+    {{ template "meta_head" }}
+</head>
+<body class="bg-slate-900 min-h-screen pb-28 text-slate-200 relative overflow-x-hidden">
+    {{ template "bg_watermark" }}
+    {{ template "header_wali" }}
+
+    <main class="px-5 space-y-6 relative z-10 mt-2">
+        <div class="border-l-4 border-sky-400 pl-3 mb-4">
+            <h2 class="text-xl font-black text-white">Gelombang PPDB</h2>
+            <p class="text-[10px] text-sky-400 font-bold uppercase tracking-widest">Silakan isi form pendaftaran</p>
+        </div>
+
+        <div class="glass-card rounded-[28px] p-6 shadow-xl">
+            <form action="/wali/daftar" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <input type="text" name="nama" placeholder="Nama Lengkap Anak" class="w-full bg-slate-950/50 border border-slate-700/50 rounded-2xl px-4 py-3.5 text-sm outline-none focus:border-sky-500" required>
+                <select name="program" class="w-full bg-slate-950/50 border border-slate-700/50 rounded-2xl px-4 py-3.5 text-sm outline-none focus:border-sky-500"><option>Tahfidz Al-Qur'an</option><option>Kitab Kuning</option></select>
+                <div class="bg-slate-950/50 p-4 rounded-2xl border border-slate-700/50 space-y-4">
+                    <div><label class="text-[10px] text-slate-400 mb-1.5 block font-bold">1. KARTU KELUARGA</label><input type="file" name="file_kk" class="text-[10px] w-full text-slate-300 file:bg-slate-700 file:text-white file:border-0 file:rounded-xl file:px-4 file:py-2" required></div>
+                    <div><label class="text-[10px] text-slate-400 mb-1.5 block font-bold">2. KTP WALI</label><input type="file" name="file_ktp_wali" class="text-[10px] w-full text-slate-300 file:bg-slate-700 file:text-white file:border-0 file:rounded-xl file:px-4 file:py-2" required></div>
+                </div>
+                <button class="w-full bg-sky-500 active:bg-sky-600 text-slate-900 font-black py-4 rounded-2xl text-sm shadow-[0_8px_20px_rgba(56,189,248,0.25)]">KIRIM BERKAS</button>
+            </form>
+        </div>
+
+        <div class="space-y-3">
+            {{ range .DaftarSiswa }}
+            <div class="glass-card border-l-[6px] border-amber-400 p-4 rounded-2xl flex justify-between items-center"><h4 class="font-black text-white text-base">{{ .Nama }}</h4><span class="bg-amber-400/10 text-amber-400 border border-amber-400/20 px-3 py-1 rounded-lg text-[9px] font-black uppercase">{{ .Status }}</span></div>
+            {{ end }}
+        </div>
+    </main>
+
+    {{ template "nav_wali" . }}
+</body>
+</html>

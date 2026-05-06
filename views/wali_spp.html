@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>Tagihan SPP - SIM-P</title>
+    {{ template "meta_head" }}
+</head>
+<body class="bg-slate-900 min-h-screen pb-28 text-slate-200 relative overflow-x-hidden">
+    {{ template "bg_watermark" }}
+    {{ template "header_wali" }}
+
+    <main class="px-5 space-y-6 relative z-10 mt-2">
+        
+        <div class="border-l-4 border-amber-400 pl-3 mb-4">
+            <h2 class="text-xl font-black text-white">Tagihan SPP</h2>
+            <p class="text-[10px] text-amber-400 font-bold uppercase tracking-widest">Keuangan Santri</p>
+        </div>
+
+        {{ range .AnakLulus }}
+        <div class="glass-card rounded-[28px] p-6 shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/20 rounded-bl-full blur-2xl"></div>
+            <div class="relative z-10">
+                <span class="bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-widest block w-max mb-3">Belum Lunas</span>
+                <h2 class="text-2xl font-black text-white mb-1">{{ .Nama }}</h2>
+                <div class="bg-slate-950/50 rounded-2xl p-4 mb-5 border border-slate-700/50 text-center mt-4">
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Tagihan Bulan Ini</p>
+                    <p class="text-3xl font-black text-amber-400">Rp 500.000</p>
+                </div>
+                <a href="https://wa.me/6281234567890?text=Konfirmasi%20SPP%20ananda%20{{ .Nama }}" target="_blank" class="flex justify-center items-center gap-2 w-full bg-amber-400 active:bg-amber-500 transition-transform active:scale-95 text-emerald-950 font-black py-4 rounded-2xl text-sm shadow-[0_8px_20px_rgba(251,191,36,0.25)]">
+                    KONFIRMASI VIA WA
+                </a>
+            </div>
+        </div>
+        {{ else }}
+        <div class="text-center p-8 glass-card rounded-2xl text-slate-500 text-xs font-bold mt-10">Belum ada tagihan aktif.</div>
+        {{ end }}
+    </main>
+
+    {{ template "nav_wali" . }}
+</body>
+</html>

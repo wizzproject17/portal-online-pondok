@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>KPI Anak - SIM-P</title>
+    {{ template "meta_head" }} </head>
+<body class="bg-slate-900 min-h-screen pb-28 text-slate-200 relative overflow-x-hidden">
+    {{ template "bg_watermark" }} {{ template "header_wali" }}  <main class="px-5 space-y-5 relative z-10 mt-2">
+        <h2 class="text-sm font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Kinerja Akademik</h2>
+        {{ range .KPI }}
+        <div class="glass-card rounded-[28px] p-6 shadow-xl relative overflow-hidden border-l-[6px] border-emerald-500">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full blur-2xl"></div>
+            <h3 class="text-2xl font-black text-white mb-1">{{ .DataSiswa.Nama }}</h3>
+            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-5">{{ .DataSiswa.Program }} • {{ .DataSiswa.Kamar }}</p>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-slate-950/40 p-4 rounded-2xl border border-slate-700/50"><p class="text-[9px] text-indigo-400 font-black uppercase tracking-widest mb-2">Hafalan Terakhir</p><p class="text-sm font-bold text-white">{{ .HafalanAkhir }}</p></div>
+                <div class="bg-slate-950/40 p-4 rounded-2xl border border-slate-700/50"><p class="text-[9px] text-amber-400 font-black uppercase tracking-widest mb-2">Status SPP</p><p class="text-sm font-bold {{ if .TagihanAktif }}text-red-400{{else}}text-emerald-400{{end}}">{{ if .TagihanAktif }}Belum Lunas{{else}}Lunas{{end}}</p></div>
+            </div>
+        </div>
+        {{ else }}
+        <div class="text-center p-8 glass-card rounded-2xl text-slate-500 text-xs font-bold">Belum ada data anak lulus.</div>
+        {{ end }}
+    </main>
+
+    {{ template "nav_wali" . }} </body>
+</html>
